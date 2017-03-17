@@ -1,0 +1,9 @@
+#!/bin/bash -e
+
+if [[ $# -ne 2 || "${1}" -ne "CLEAN" ]]; then
+  >&2 echo "Error, required arg with appropriate value not provided"
+  echo -e "\n**DESTRUCTIVE**: Cleans all python project artifacts in given path. Usage:\n${0} CLEAN path"
+  exit 1
+else
+  find ${2} \( -wholename "${2}*.pyc" -or -wholename "${2}*.egg-info" -or -wholename "${2}*__pycache__" -or -wholename "${2}*.egg*" -or -wholename "${2}dist" -or -wholename "${2}build" -or -wholename "${2}ve" \) -print0 | xargs -0 rm -Rf
+fi

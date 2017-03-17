@@ -1,0 +1,40 @@
+#!/bin/bash
+
+SOURCE="${BASH_SOURCE[0]}"
+
+if [[ $# -lt 1 ]]; then
+  >&2 echo "Error, required arg with appropriate value not provided"
+  echo -e "Usage:\n${0} 'dir' 'command'"
+  exit 1
+else
+  BASE="$1"
+  BUILD="${BASE}/build"
+  VE="${BASE}/ve"
+
+  echo "Using: $BASE $BUILD $VE"
+
+  if [ ! -d "$VE" ]; then
+    CFG="$(dirname ${SOURCE})/../python/setup.cfg"
+    PREF_VER=$(grep -oP "(?<=requires-python = )(.*)" $CFG | cut -d'.' -f1)
+    PY=$(which python${PREF_VER})
+
+    if [ $? -ne 0 ]; then
+      PY=$(which python)
+      >&2 echo "Unable to find Python interpreter preferred for major version num in $(realpath $CFG) ($PREF_VER), using default"
+    else
+      virtualenv -p "$PY" -q "$VE" --system-site-packages
+      if [ $? -ne 0 ]; then
+        >&2 echo "Unable to create virtualenv with Python in PATH, please ensure an interpreter is properly installed."
+        exit 1
+      fi
+    fi
+  fi
+
+  source ${VE}/bin/activate
+  cd $BASE
+  export PYTHONPATH=$BUILD:$PYTHONPATH
+
+  export PATH=$VE/bin:$PATH
+  # run input command
+  exec ${@:2}
+fi

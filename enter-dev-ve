@@ -1,0 +1,7 @@
+#!/bin/bash -e
+
+make python/ve
+source ./python/ve/bin/activate
+
+cd python
+python ./setup.py develop

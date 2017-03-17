@@ -1,0 +1,5 @@
+python/ve
+python/build
+python/dist
+python/*.egg*
+*.pyc
