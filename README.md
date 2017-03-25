@@ -1,6 +1,6 @@
 # Seven Segment Service Reporter
 
-A program that interrogates `systemd` using Python DBUS bindings to determine the uptime of a particular service unit and writes it to an Adafruit seven segment LED display. **Note** the `Makefile` will attempt to install the python dbus bindings upon setting up the development environment.
+A program that interrogates `systemd` using Python DBUS bindings to determine the uptime of a particular service unit and writes it to an Adafruit seven segment LED display w/ i2c backpack (cf. https://www.adafruit.com/products/880). **Note** the `Makefile` will attempt to install the python dbus bindings upon setting up the development environment.
 
 ## Installation on a Pi ##
 
