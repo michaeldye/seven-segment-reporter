@@ -60,7 +60,7 @@ def uptime():
 
         display.print_float(clock_value, decimal_digits=0, justify_right=False)
       else:
-        sleep_time = 3599
+        sleep_time = 10
 
         display.print_number_str(str(clock_value), justify_right=False)
 
